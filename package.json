@@ -1,0 +1,8 @@
+{
+  "name": "globalchart",
+  "version": "1.0.0",
+  "main": "global.js",
+  "scripts": {
+    "start": "node global.js"
+  }
+}
