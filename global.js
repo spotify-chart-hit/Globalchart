@@ -647,12 +647,26 @@ fs.existsSync(
 )
 ){
 
+try{
+
 savedDates =
 JSON.parse(
 fs.readFileSync(
-"global-chart-dates.json"
+"global-chart-dates.json",
+"utf8"
 )
 );
+
+}catch{
+
+console.log(
+"Broken dates file 😭"
+);
+
+savedDates =
+null;
+
+}
 
 }
 
