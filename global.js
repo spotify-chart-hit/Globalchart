@@ -108,61 +108,41 @@ console.log(
 "SCRAPING GLOBAL 😭🔥"
 );
 
-const results = {
-
-updatedAt:
-new Date()
-.toISOString(),
-
-song:{
-daily:[],
-weekly:[]
-},
-
-artist:{
-daily:[],
-weekly:[]
-},
-
-album:{
-weekly:[]
-}
-
-};
+let results=[];
 
 const endpoints = [
 
 {
-type:"song",
-mode:"daily",
+kind:"song",
+type:"daily",
 url:
 "https://charts-spotify-com-service.spotify.com/auth/v0/charts/regional-global-daily/latest"
 },
 
 {
-type:"song",
-mode:"weekly",
+kind:"song",
+type:"weekly",
 url:
 "https://charts-spotify-com-service.spotify.com/auth/v0/charts/regional-global-weekly/latest"
 },
 
 {
-type:"artist",
-mode:"daily",
+kind:"artist",
+type:"daily",
 url:
 "https://charts-spotify-com-service.spotify.com/auth/v0/charts/artist-global-daily/latest"
 },
 
 {
-type:"artist",
-mode:"weekly",
+kind:"artist",
+type:"weekly",
 url:
 "https://charts-spotify-com-service.spotify.com/auth/v0/charts/artist-global-weekly/latest"
 },
 
 {
-type:"album",
-mode:"weekly",
+kind:"album",
+type:"weekly",
 url:
 "https://charts-spotify-com-service.spotify.com/auth/v0/charts/album-global-weekly/latest"
 }
@@ -178,8 +158,8 @@ try{
 
 console.log(
 `CHECKING
-${item.type}
-${item.mode}`
+${item.kind}
+${item.type}`
 );
 
 let response =
@@ -201,8 +181,8 @@ response.status===429
 
 console.log(
 `429 😭
-${item.type}
-${item.mode}`
+${item.kind}
+${item.type}`
 );
 
 await sleep(
@@ -239,14 +219,14 @@ data.entries
 data.chartEntryViewResponses
 ||
 [];
- for(
+for(
 const entry
 of entries
 ){
 
 // SONG
 if(
-item.type
+item.kind
 ==="song"
 ){
 
@@ -279,12 +259,12 @@ entry
 ?.previousRank;
 
 const rankChange =
-previousRank
+previousRank > 0
 ? Math.abs(
 currentRank -
 previousRank
 )
-: 0;
+: currentRank + 1;
 
 let direction =
 "=";
@@ -309,10 +289,13 @@ direction =
 
 }
 
-results
-.song
-[item.mode]
-.push({
+results.push({
+
+country:
+"GLOBAL",
+
+type:
+item.type,
 
 rank:
 currentRank,
@@ -347,7 +330,7 @@ entry
 artists:
 
 artists.map(
-a => a.name
+a=>a.name
 ),
 
 image:
@@ -378,7 +361,7 @@ ${entry.trackMetadata?.trackName}`
 
 // ARTIST
 if(
-item.type
+item.kind
 ==="artist"
 ){
 
@@ -394,22 +377,59 @@ artistName
 "jimin"
 ){
 
-results
-.artist
-[item.mode]
-.push({
+const currentRank =
+entry
+.chartEntryData
+?.currentRank;
+
+const previousRank =
+entry
+.chartEntryData
+?.previousRank;
+
+const rankChange =
+previousRank > 0
+? Math.abs(
+currentRank -
+previousRank
+)
+: currentRank + 1;
+
+let direction =
+"=";
+
+if(
+currentRank <
+previousRank
+){
+
+direction =
+"up";
+
+}
+
+else if(
+currentRank >
+previousRank
+){
+
+direction =
+"down";
+
+}
+
+results.push({
+
+country:
+"GLOBAL",
+
+type:
+item.type,
 
 rank:
+currentRank,
 
-entry
-.chartEntryData
-?.currentRank,
-
-previousRank:
-
-entry
-.chartEntryData
-?.previousRank,
+previousRank,
 
 peakRank:
 
@@ -434,7 +454,16 @@ image:
 entry
 .artistMetadata
 ?.visualIdentity
-?.imageUri
+?.imageUri,
+
+rankChange,
+direction,
+
+entryStatus:
+
+entry
+.chartEntryData
+?.entryStatus
 
 });
 
@@ -444,11 +473,10 @@ console.log(
 
 }
 
-}
-
+ }
 // ALBUM
 if(
-item.type
+item.kind
 ==="album"
 ){
 
@@ -470,22 +498,59 @@ artist.name
 
 if(hasJimin){
 
-results
-.album
-.weekly
-.push({
+const currentRank =
+entry
+.chartEntryData
+?.currentRank;
+
+const previousRank =
+entry
+.chartEntryData
+?.previousRank;
+
+const rankChange =
+previousRank > 0
+? Math.abs(
+currentRank -
+previousRank
+)
+: currentRank + 1;
+
+let direction =
+"=";
+
+if(
+currentRank <
+previousRank
+){
+
+direction =
+"up";
+
+}
+
+else if(
+currentRank >
+previousRank
+){
+
+direction =
+"down";
+
+}
+
+results.push({
+
+country:
+"GLOBAL",
+
+type:
+"weekly",
 
 rank:
+currentRank,
 
-entry
-.chartEntryData
-?.currentRank,
-
-previousRank:
-
-entry
-.chartEntryData
-?.previousRank,
+previousRank,
 
 peakRank:
 
@@ -508,14 +573,23 @@ entry
 artists:
 
 artists.map(
-a => a.name
+a=>a.name
 ),
 
 image:
 
 entry
 .albumMetadata
-?.coverArtUri
+?.coverArtUri,
+
+rankChange,
+direction,
+
+entryStatus:
+
+entry
+.chartEntryData
+?.entryStatus
 
 });
 
@@ -542,7 +616,8 @@ err.message
 
 }
 
-  } 
+}
+
 fs.writeFileSync(
 "global-chart.json",
 JSON.stringify(
@@ -655,3 +730,4 @@ console.log(
 }
 
 start();
+
