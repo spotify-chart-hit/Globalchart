@@ -53,6 +53,7 @@ await sleep(
 );
 
 continue;
+
 }
 
 break;
@@ -230,8 +231,7 @@ continue;
 }
 
 const data =
-await response
-.json();
+await response.json();
 
 const entries =
 data.entries
@@ -239,7 +239,7 @@ data.entries
 data.chartEntryViewResponses
 ||
 [];
-  for(
+ for(
 const entry
 of entries
 ){
@@ -266,9 +266,7 @@ artist.name
 "jimin"
 );
 
-if(
-hasJimin
-){
+if(hasJimin){
 
 const currentRank =
 entry
@@ -292,10 +290,6 @@ let direction =
 "=";
 
 if(
-previousRank
-){
-
-if(
 currentRank <
 previousRank
 ){
@@ -312,8 +306,6 @@ previousRank
 
 direction =
 "down";
-
-}
 
 }
 
@@ -355,7 +347,7 @@ entry
 artists:
 
 artists.map(
-a=>a.name
+a => a.name
 ),
 
 image:
@@ -476,9 +468,7 @@ artist.name
 "jimin"
 );
 
-if(
-hasJimin
-){
+if(hasJimin){
 
 results
 .album
@@ -518,7 +508,7 @@ entry
 artists:
 
 artists.map(
-a=>a.name
+a => a.name
 ),
 
 image:
@@ -552,8 +542,7 @@ err.message
 
 }
 
-}
-
+  } 
 fs.writeFileSync(
 "global-chart.json",
 JSON.stringify(
@@ -567,7 +556,8 @@ console.log(
 "UPDATED global-chart.json 😍"
 );
 
-  }
+}
+
 async function start(){
 
 const token =
@@ -597,18 +587,13 @@ token
 );
 
 const firstRun =
-
 !savedDates
-
 ||
-
 !fs.existsSync(
 "global-chart.json"
 );
 
-if(
-firstRun
-){
+if(firstRun){
 
 console.log(
 "FIRST RUN 😍"
@@ -632,23 +617,16 @@ return;
 }
 
 const changed =
-
-latest.daily
-!==
+latest.daily !==
 savedDates.daily
-
 ||
-
-latest.weekly
-!==
+latest.weekly !==
 savedDates.weekly;
 
-if(
-changed
-){
+if(changed){
 
 console.log(
-"NEW GLOBAL CHART 😍"
+"NEW CHART 😍"
 );
 
 await scrape(
@@ -669,7 +647,7 @@ null,
 else{
 
 console.log(
-"SAME GLOBAL 😴"
+"SAME CHART 😴"
 );
 
 }
@@ -677,4 +655,3 @@ console.log(
 }
 
 start();
-  
