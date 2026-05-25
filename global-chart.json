@@ -1,1 +1,46 @@
-
+{
+  "updatedAt": "2026-05-25T15:01:06.333Z",
+  "song": {
+    "daily": [
+      {
+        "rank": 109,
+        "previousRank": 191,
+        "peakRank": 1,
+        "appearances": 674,
+        "streams": "1446881",
+        "track": "Who",
+        "artists": [
+          "Jimin"
+        ],
+        "image": "https://i.scdn.co/image/ab67616d00001e02f02c451189a709b9a952aaec",
+        "rankChange": 82,
+        "direction": "up",
+        "entryStatus": "MOVED_UP"
+      }
+    ],
+    "weekly": [
+      {
+        "rank": 151,
+        "previousRank": 130,
+        "peakRank": 1,
+        "appearances": 96,
+        "streams": "10033863",
+        "track": "Who",
+        "artists": [
+          "Jimin"
+        ],
+        "image": "https://i.scdn.co/image/ab67616d00001e02f02c451189a709b9a952aaec",
+        "rankChange": 21,
+        "direction": "down",
+        "entryStatus": "MOVED_DOWN"
+      }
+    ]
+  },
+  "artist": {
+    "daily": [],
+    "weekly": []
+  },
+  "album": {
+    "weekly": []
+  }
+}
