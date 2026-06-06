@@ -1,8 +1,6 @@
 name: Global Chart
 
 on:
-  schedule:
-    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 jobs:
@@ -39,3 +37,4 @@ jobs:
           git commit -m "update global chart" || exit 0
 
           git push
+
