@@ -2,19 +2,19 @@
   {
     "country": "GLOBAL",
     "type": "daily",
-    "rank": 179,
-    "previousRank": 156,
+    "rank": 170,
+    "previousRank": 179,
     "peakRank": 1,
-    "appearances": 713,
-    "streams": "1288108",
+    "appearances": 714,
+    "streams": "1245558",
     "track": "Who",
     "artists": [
       "Jimin"
     ],
     "image": "https://i.scdn.co/image/ab67616d00001e02f02c451189a709b9a952aaec",
-    "rankChange": 23,
-    "direction": "down",
-    "entryStatus": "MOVED_DOWN"
+    "rankChange": 9,
+    "direction": "up",
+    "entryStatus": "MOVED_UP"
   },
   {
     "country": "GLOBAL",
